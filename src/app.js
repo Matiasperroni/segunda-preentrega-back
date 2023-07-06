@@ -13,7 +13,6 @@ import dotenv from "dotenv";
 // const MONGO_URL = `mongodb+srv://Matias-Perroni:fcKP3TXvcILtCNWu@cluster0.ymwavy3.mongodb.net/ecommerce?retryWrites=true&w=majority`;
 dotenv.config();
 const MONGO_URL = process.env.MONGO_URL;
-console.log("soy la url de mongo", MONGO_URL);
 
 //instance of server
 const app = express();
@@ -24,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB connection
 mongoose
     .connect(MONGO_URL)
-    .then(() => console.log("Conected with MongoDB in URL " + MONGO_URL))
+    .then(() => console.log("Connected with MongoDB in URL " + MONGO_URL))
     .catch((err) => console.error(err));
 
 

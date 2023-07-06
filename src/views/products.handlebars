@@ -1,12 +1,13 @@
 <div>
     <h1>List of Products</h1>
-    <ul>
+    <ul class="ul">
         {{#each products.docs}}
             <li>Title: {{this.title}}</li>
             <li>Description: {{this.description}}</li>
             <li>Category: {{this.category}}</li>
             <li>Price: ${{this.price}}</li>
-            <button id="addToCart">Add To Cart</button>
+            <li>Id: ${{this._id}}</li>
+            <button class="addToCart">Add To Cart</button>
         {{/each}}
     </ul>
     <div>
@@ -23,3 +24,4 @@
         {{/if}}
     </div>
 </div>
+<script src="/js/prods.js"></script>

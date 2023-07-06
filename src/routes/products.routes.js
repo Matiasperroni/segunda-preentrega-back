@@ -1,11 +1,13 @@
 import { Router } from "express";
 // import ProductManager from "../dao/managers/ProductsManager.js";
 import productsManagerDB from "../dao/models/products.manager.js";
+import CartManagerDB from '../dao/models/carts.manager.js';
 import productsModel from "../dao/schemas/products.schema.js";
 
 const router = Router();
 
 const productManager = new productsManagerDB();
+const cartManager = new CartManagerDB;
 
 router.get("/", async (req, res) => {
     const { page, query, limit, order } = req.query;
@@ -37,6 +39,7 @@ router.get("/", async (req, res) => {
             }
         );
     }
+
     res.render("products", { products, query, order });
 });
 
