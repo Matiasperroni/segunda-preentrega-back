@@ -1,8 +1,10 @@
 // const buttonAddToCart = document.getElementsByClassName("addToCart")
 // console.log(buttonAddToCart);
-const ul = document.getElementsByClassName("ul")
+// const productsManagerDB require ('../../dao/models/products.manager')
+// const productManager = new productsManagerDB()
+const idDos = document.querySelector(".idValue")
 
 const addToCart = () => {
-    console.log(ul.innerHTML);
+    console.log(idDos.textContent)
 }
 

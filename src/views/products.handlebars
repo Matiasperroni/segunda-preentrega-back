@@ -6,8 +6,10 @@
             <li>Description: {{this.description}}</li>
             <li>Category: {{this.category}}</li>
             <li>Price: ${{this.price}}</li>
-            <li>Id: ${{this._id}}</li>
-            <button class="addToCart">Add To Cart</button>
+            <li class="idValue">Id: ${{this._id}}</li>
+            <li>{{cartManager}}</li>
+            <li>{{cartManager.getCarts}}</li>
+            <button class="addToCart" onclick=console.log({{cartManager}})>Add To Cart</button>
         {{/each}}
     </ul>
     <div>

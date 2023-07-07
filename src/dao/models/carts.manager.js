@@ -5,12 +5,13 @@ class CartManagerDB {
         this.cartsModel = cartModel;
     }
 
-    async getCarts () {
+    async getCarts() {
         try {
-            const carts = await this.cartsModel.find().lean()
-            return carts
+            const carts = await this.cartsModel.find().lean();
+            console.log(carts);
+            return carts;
         } catch (error) {
-            throw new Error("Could not get carts.")
+            throw new Error("Could not get carts.");
         }
     }
     async createNewCart() {
@@ -22,11 +23,13 @@ class CartManagerDB {
         }
     }
 
-
     // const cartFound = await this.cartsModel.find({_id: id}).populate("products.product");
     async getCartByID(id) {
         try {
-            const cartFound = await this.cartsModel.findById(id).populate("products.product").lean()
+            const cartFound = await this.cartsModel
+                .findById(id)
+                .populate("products.product")
+                .lean();
             if (cartFound) {
                 return cartFound;
             } else {
@@ -63,12 +66,10 @@ class CartManagerDB {
     }
     async deleteProdFromCart(cartID, prodID) {
         try {
-            const cart = await this.cartsModel.findById(cartID)
-            console.log("from cart", cart);
+            const cart = await this.cartsModel.findById(cartID);
             const prodIndex = cart.products.findIndex(
                 (prod) => prod.product === prodID
             );
-            console.log("from prod", prodIndex);
             if (prodIndex !== -1) {
                 cart.products[prodIndex].quantity++;
             } else {
@@ -76,21 +77,61 @@ class CartManagerDB {
                 cart.products.splice(prodToDelete, 1);
             }
             await cart.save();
-            return cart
-        } catch(error) {
-            throw new Error("It doesn´t exists a cart or product with such ID.")
+            return cart;
+        } catch (error) {
+            throw new Error(
+                "It doesn´t exists a cart or product with such ID."
+            );
         }
     }
-    async updateWholeCart (cartID, prods) {
+    async updateWholeCart(cartID, prods) {
         try {
             // const cartToUpdate = await this.cartsModel.findById(cartID);
-            const updatedCart = await this.cartsModel.findOneAndUpdate(cartID, prods)
+            const updatedCart = await this.cartsModel.findOneAndUpdate(
+                { _id: cartID },
+                { product: prods },
+                (err) => {
+                    if (err) {
+                        console.error(
+                            "An error updating the cart has ocurred",
+                            err
+                        );
+                    } else {
+                        console.log("Cart has been updated");
+                    }
+                }
+            );
             console.log("updated cart", updatedCart);
-            
+
             return updatedCart;
-        } catch(error) {
-            // throw new Error("Couldn´t update cart.")
-            console.log("no anda");
+        } catch (error) {
+            throw new Error("Couldn´t update cart.");
+            // console.log("no anda");
+        }
+    }
+    async emptyCart(cartID) {
+        try {
+            const cart = await this.cartsModel.findById(cartID);
+            cart.products = [];
+            await cart.save();
+            return cart;
+        } catch (err) {
+            console.error(err);
+            // console.log("no se pudo vaciar");
+        }
+    }
+    async updateQuantity(cartID, prodID, quantity) {
+        try {
+            const cart = await this.cartsModel.findById(cartID);
+            console.log("soy cart", cart);
+            const prodToUpdate = cart.products.find((product) => product._id.toString() === prodID);
+            console.log("soy prodToUpdate", prodToUpdate);
+            prodToUpdate.quantity = quantity;
+            console.log("soy prodToUpdate despues", prodToUpdate);
+            cart.save();
+            return cart;
+        } catch (err) {
+            console.error(err)
         }
     }
 }

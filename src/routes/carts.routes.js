@@ -50,7 +50,6 @@ router.post("/:cid/product/:pid", async (req, res) => {
 router.delete("/:cid/products/:pid", async (req, res) => {
     const cartID = req.params.cid;
     const prodID = req.params.pid;
-    console.log(cartID, prodID);
     const deleted = await cartManager.deleteProdFromCart(cartID, prodID)
     res.send(deleted)
 })
@@ -60,15 +59,23 @@ router.put("/:cid", async (req, res) => {
     const prod = req.body;
     console.log(cartID, prod);
     const updatedCart = await cartManager.updateWholeCart(cartID, prod)
+    console.log("a ver", updatedCart);
     res.send(updatedCart)
 })
 
 router.put("/:cid/products/:pid", async (req, res) => {
-
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+    const quantity = req.body.quantity;
+    const updatedQuantity = await cartManager.updateQuantity(cid, pid, quantity)
+    res.send(updatedQuantity)
 })
 
 router.delete("/:cid", async (req, res) => {
-
+    const cid = req.params.cid;
+    const deletedCart = await cartManager.emptyCart(cid)
+    console.log(deletedCart);
+    res.send(deletedCart)
 })
 
 
