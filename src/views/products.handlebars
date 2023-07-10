@@ -7,9 +7,7 @@
             <li>Category: {{this.category}}</li>
             <li>Price: ${{this.price}}</li>
             <li class="idValue">Id: ${{this._id}}</li>
-            <li>{{cartManager}}</li>
-            <li>{{cartManager.getCarts}}</li>
-            <button class="addToCart" onclick=console.log({{cartManager}})>Add To Cart</button>
+            <button class="addToCart" data-id={{this._id}}>Agregar al carrito</button>
         {{/each}}
     </ul>
     <div>

@@ -44,8 +44,8 @@ class productsManagerDB {
             );
             return updatedProduct;
         } catch (error) {
-            console.log("Cannot update");
-            // throw new Error("Could not update product")
+            // console.log("Cannot update");
+            throw new Error("Could not update product")
         }
     }
     async deleteProduct(pid) {

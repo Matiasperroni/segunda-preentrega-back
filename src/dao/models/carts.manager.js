@@ -8,10 +8,10 @@ class CartManagerDB {
     async getCarts() {
         try {
             const carts = await this.cartsModel.find().lean();
-            console.log(carts);
             return carts;
         } catch (error) {
-            throw new Error("Could not get carts.");
+            // throw new Error("Doesn´t exists a cart with this ID.");
+            console.error("Doesn´t exists a cart with this ID.")
         }
     }
     async createNewCart() {
@@ -43,7 +43,6 @@ class CartManagerDB {
     async addToCart(cartID, prodID) {
         try {
             const cart = await this.cartsModel.findById(cartID);
-            console.log(cart);
             if (!cart) {
                 throw new Error("Cart not found");
             }
@@ -123,11 +122,11 @@ class CartManagerDB {
     async updateQuantity(cartID, prodID, quantity) {
         try {
             const cart = await this.cartsModel.findById(cartID);
-            console.log("soy cart", cart);
-            const prodToUpdate = cart.products.find((product) => product._id.toString() === prodID);
-            console.log("soy prodToUpdate", prodToUpdate);
+            // console.log("soy cart", cart.products);
+            const prodToUpdate = cart.products.find((prod) => prod.product._id.toString() === prodID);
+            // console.log("soy prodToUpdate", prodToUpdate);
             prodToUpdate.quantity = quantity;
-            console.log("soy prodToUpdate despues", prodToUpdate);
+            // console.log("soy prodToUpdate despues", prodToUpdate);
             cart.save();
             return cart;
         } catch (err) {

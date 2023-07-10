@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
         );
     }
     const cartManager = new CartManagerDB;
-    res.render("products", { products, query, order, cartManager });
+    res.render("products", { products, query, order });
 });
 
 router.get("/:pid", async (req, res) => {
